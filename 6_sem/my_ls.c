@@ -1,0 +1,60 @@
+#include <sys/types.h>
+#include <dirent.h>
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_PATH_SIZE 1024
+
+void ls_dir(char *path);
+
+int main(int argc, char* argv[])
+{
+
+    if(argc != 2)
+    {
+        printf("no arguments or more than 1 argument written (requiers 1 argument\n)");
+        return -1;
+    }
+    ls_dir(argv[1]);
+
+     
+    return 0;
+}
+
+void ls_dir(char *path)
+{
+    DIR *dp = opendir(path);
+    if(dp == NULL)
+    {
+        return;
+    }
+    struct dirent *e;
+
+    while((e = readdir(dp)) != NULL)
+    {
+        printf("i_node number = %ld\tfile_type = %d\tfile_name = %s\n", (long int)(e->d_ino), e->d_type, e->d_name);
+    }
+    printf("\n");
+    closedir(dp);
+
+    dp = opendir(path);
+    while((e = readdir(dp)) != NULL)
+    {
+        char path_copy[MAX_PATH_SIZE];
+        if(e->d_type == 4)
+        {
+            if(strcmp(e->d_name, "." ) != 0 && strcmp(e->d_name, "..") != 0)
+            {
+                strcpy(path_copy, path);
+                strcat(strcat(path_copy, e->d_name), "/");
+                printf("%s:\n", path_copy);
+                ls_dir(path_copy);
+            }
+        }
+    }
+    
+
+    closedir(dp);
+    return;
+}
+

@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+void my_parser(char *buf, int len, char**** table_of_programs, int* number_of_programs);
+int get_number_of_programs(char *buf);
+int get_argc(char *buf);
+
+int main()
+{
+    char test_str[] = "echo hello world | wc | hi";
+    printf("%s\n", strtok(test_str, " "));
+
+
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
