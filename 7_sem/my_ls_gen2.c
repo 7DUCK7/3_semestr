@@ -53,10 +53,13 @@ char** get_args_and_opts(int argc, char *argv[], char* array_of_options)
                                                                 }; 
     
     int longindex;
-    char c;
+    char *current_opt_ptr;
+    int c;
     while((c = getopt_long(argc, argv, optstring, longopts, &longindex)) >= 0)
     {
-        array_of_options[longindex] = c;
+        if((current_opt_ptr = strchr(optstring, c)) == NULL)
+            perror("found unsupported option, check your input");
+        array_of_options[current_opt_ptr - optstring] = c;
     }
     return &(argv[optind]); 
 
