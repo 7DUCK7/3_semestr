@@ -95,7 +95,6 @@ void my_parser(char *buf, char**** table_of_programs, int* number_of_programs)
     char*** program_table = (char***)calloc(n_of_programs, sizeof(char*));
     char *current_ptr_position;
 
-
     //разделение на программы
     current_ptr_position = strtok(buf, "|\n");
     while(*current_ptr_position == ' ')
@@ -124,7 +123,6 @@ void my_parser(char *buf, char**** table_of_programs, int* number_of_programs)
             if((current_ptr_position = strtok(NULL, " \n")) == NULL)
                 break;
             program_table[i][j] = current_ptr_position;
-            //printf("потоковая печать argv: program_table[%d][%d] == %s\n",i, j, program_table[i][j]);
             j++;
         }
         program_table[i][j] = current_ptr_position;
